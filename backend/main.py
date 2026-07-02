@@ -76,9 +76,20 @@ async def match_resume(file: UploadFile = File(...)):
         # Score every job
         results = []
         for job in jobs:
-            match_percentage = calculate_similarity(resume_text, job["description"])
             skill_gap = analyse_skill_gap(resume_skills, job["required_skills"])
             radar_data = build_radar_data(resume_skills, job["required_skills"])
+
+            # --- Blended match score ---
+            # 70% skill overlap: how many required skills does the resume cover?
+            n_required = len(job["required_skills"])
+            n_matching = len(skill_gap["matching_skills"])
+            skill_score = (n_matching / n_required * 100) if n_required > 0 else 0
+
+            # 30% text similarity: TF-IDF cosine (raw ~0-0.3), scaled to 0-100
+            raw_tfidf = calculate_similarity(resume_text, job["description"])
+            text_score = min(raw_tfidf * 5, 100)   # scale up, cap at 100
+
+            match_percentage = round(skill_score * 0.7 + text_score * 0.3, 1)
 
             results.append({
                 "title": job["title"],
