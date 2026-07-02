@@ -24,7 +24,7 @@ app = FastAPI(title="Resume Matcher API")
 origins = [
     "http://localhost:3000",
     "https://resume-matcher-7449.onrender.com",
-    "https://resume-matcher.vercel.app",   # update this after Vercel gives you the URL
+    "https://resume-matcher-two-iota.vercel.app",
 ]
 
 app.add_middleware(
