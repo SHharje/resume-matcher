@@ -23,8 +23,8 @@ app = FastAPI(title="Resume Matcher API")
 # --------------- CORS ---------------
 origins = [
     "http://localhost:3000",
-    # Add your Vercel production URL here once deployed, e.g.:
-    # "https://resume-matcher-xyz.vercel.app",
+    "https://resume-matcher-7449.onrender.com",
+    "https://resume-matcher.vercel.app",   # update this after Vercel gives you the URL
 ]
 
 app.add_middleware(
